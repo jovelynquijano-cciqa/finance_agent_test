@@ -1,0 +1,31 @@
+{
+  "name": "finance_agent_tests",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:contract": "jest tests/contract --runInBand",
+    "test:guardrail": "jest tests/guardrail --runInBand",
+    "test:e2e": "npx playwright test tests/e2e",
+    "test:ui": "npx playwright test tests/ui",
+    "test:perf": "k6 run tests/perf/ar_aging.k6.js",
+    "test:security": "echo \"Run security scan via GitHub Actions (ZAP)\" && exit 0",
+    "coverage": "jest --coverage",
+    "qa:all": "npm run test:contract && npm run test:guardrail && npm run test:e2e && npm run test:ui && npm run test:perf"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.1.3",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.1",
+    "zod": "^4.1.5"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
