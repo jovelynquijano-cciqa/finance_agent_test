@@ -1,0 +1,35 @@
+name: QA Test Suite
+
+on:
+  push:
+    branches: [ "test" ]
+  pull_request:
+    branches: [ "test" ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Contract Tests
+        run: npm run test:contract
+
+      - name: Run Guardrail Tests
+        run: npm run test:guardrail
+
+      - name: Run E2E Tests
+        run: npm run test:e2e
+
+      - name: Run Coverage
+        run: npm run coverage
