@@ -3,13 +3,13 @@ const fs = require("fs");
 const path = require("path");
 const { runContractTests } = require("./validators/validate_contract");
 
-const metaPath = path.join(__dirname, "../../fixtures/ar_spike_14v60.meta.json");
+const metaPath = path.join(__dirname, "../../fixtures/aging_migration_61plus_wow.meta.json");
 
 const schema = z.object({
   customer_id: z.string(),
-  overdue_14d: z.number(),
-  overdue_prev_60d: z.number(),
-  spike_pct: z.number(),
+  week_start: z.string(),        // assuming string
+  overdue_61_plus: z.number(),
+  delta_wow: z.number(),
 });
 
 runContractTests(metaPath, schema);

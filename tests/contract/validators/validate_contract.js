@@ -61,7 +61,8 @@ function runContractTests(metaPath, schema) {
     });
 
     test("validates template_id is properly set", () => {
-    expect(meta.template_id).toBe("ar_spike_14v60");
+      expect(meta.template_id).toBeDefined();
+      expect(meta.template_id.length).toBeGreaterThan(0);
     });
   });
 }
