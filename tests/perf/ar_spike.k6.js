@@ -16,7 +16,7 @@ export let options = {
 };
 
 export default function () {
-  const res = http.get('API');
+  const res = http.get('http://18.139.107.202:8083/query');
 
   // Check response
   check(res, {
