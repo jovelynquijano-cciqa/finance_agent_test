@@ -5,13 +5,16 @@ on:
     branches: [ "test" ]
   pull_request:
     branches: [ "test" ]
+  workflow_dispatch:
 
 jobs:
+  # --------------------
+  # Contract + Guardrail + E2E + Coverage
+  # --------------------
   tests:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
+      - name: Checkout QA repo
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -20,7 +23,7 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Contract Tests
         run: npm run test:contract
@@ -33,3 +36,18 @@ jobs:
 
       - name: Run Coverage
         run: npm run coverage
+
+  # --------------------
+  # Performance (K6)
+  # --------------------
+  perf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout QA repo
+        uses: actions/checkout@v3
+
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Run performance test
+        run: k6 run tests/perf/ar_spike.k6.js

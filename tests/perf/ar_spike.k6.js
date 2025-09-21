@@ -16,7 +16,7 @@ export let options = {
 };
 
 export default function () {
-  const res = http.get('http://localhost:3000/mock/agent/ar_aging');
+  const res = http.get('API');
 
   // Check response
   check(res, {

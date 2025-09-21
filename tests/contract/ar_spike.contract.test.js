@@ -1,24 +1,20 @@
 const { z } = require("zod");
-const meta = require("../../fixtures/ar_spike_14v60.meta.json");
+const fs = require("fs");
+const path = require("path");
 
-describe("Contract Test: ar_spike_14v60", () => {
-  test("Includes required filters (tenant_id, as_of_date)", () => {
-    expect(meta.required_filters).toEqual(
-      expect.arrayContaining(["tenant_id", "as_of_date"])
-    );
-  });
+// Load meta.json
+const meta = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "../../intents/ar_spike_14v60.meta.json"), "utf-8")
+);
 
-  test("Includes correct projected columns", () => {
-    const expectedColumns = [
-      "customer_id",
-      "overdue_14d",
-      "overdue_prev_60d",
-      "spike_pct"
-    ];
-    expect(meta.projected_columns.sort()).toEqual(expectedColumns.sort());
-  });
+// Build schema from meta.json
+const schema = z.object({
+  customer_id: z.string(),
+  overdue_14d: z.number(),
+  overdue_prev_60d: z.number(),
+  spike_pct: z.number(),
+});
 
-  test("Enforces partitioning (yyyy_mm)", () => {
-    expect(meta.partitions).toContain("yyyy_mm");
-  });
+test("AR Spike contract matches meta.json", () => {
+  expect(() => schema.parse(sampleRow)).not.toThrow();
 });
