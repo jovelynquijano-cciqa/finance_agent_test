@@ -1,0 +1,48 @@
+name: Security Scan
+
+on:
+  # Run manually, nightly, and on merges to main
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 3 * * *"   # every day at 03:00 UTC
+  push:
+    branches: [ "test" ]
+  pull_request:
+    branches: [ "test" ]
+
+jobs:
+  # zap-finance:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout QA repo
+  #       uses: actions/checkout@v3
+
+  #     - name: Run OWASP ZAP Baseline Scan - Finance API
+  #       uses: zaproxy/action-baseline@v0.7.0
+  #       with:
+  #         target: "https://staging-api.company.com/finance/"
+
+  zap-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout QA repo
+        uses: actions/checkout@v4
+
+      - name: Run OWASP ZAP Baseline Scan - Auth API
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          target: 'https://phoenix-templated-sql-gkdug6f2aqg6eufp.southeastasia-01.azurewebsites.net/query'
+          docker_name: 'zaproxy/zap-stable'
+          issue_title: 'ZAP Scan Auth API Report'
+          fail_action: false
+          allow_issue_writing: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload ZAP Scan Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zap-scan-results-auth
+          path: |
+            report_json.json
+            report_md.md
