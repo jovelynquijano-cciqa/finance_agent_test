@@ -36,7 +36,6 @@ jobs:
           path: |
             report_json.json
             report_md.md
-            report_html.html
 
   zap-langraph:
     runs-on: ubuntu-latest
