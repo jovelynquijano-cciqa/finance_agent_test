@@ -31,7 +31,7 @@ jobs:
       - name: Run OWASP ZAP Baseline Scan - Auth API
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: 'https://phoenix-ten-mu.vercel.app/api/auth/'
+          target: 'https://phoenix-templated-sql-gkdug6f2aqg6eufp.southeastasia-01.azurewebsites.net/query'
           docker_name: 'zaproxy/zap-stable'
           issue_title: 'ZAP Scan Auth API Report'
           fail_action: false
