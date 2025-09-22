@@ -16,7 +16,7 @@ export let options = {
 };
 
 export default function () {
-  const res = http.get('http://18.139.107.202:8083/query');
+  const res = http.get('https://phoenix-templated-sql-gkdug6f2aqg6eufp.southeastasia-01.azurewebsites.net/query');
 
   // Check response
   check(res, {
